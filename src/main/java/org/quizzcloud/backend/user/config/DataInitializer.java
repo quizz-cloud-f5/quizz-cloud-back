@@ -5,6 +5,7 @@ package org.quizzcloud.backend.user.config;
 import org.quizzcloud.backend.user.model.Role;
 import org.quizzcloud.backend.user.model.User;
 import org.quizzcloud.backend.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,16 @@ public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Value("${initial.admin.username}")
+    private String adminName;
+    @Value("${initial.admin.password}")
+    private String adminPassword;
+
+    @Value("${initial.user.username}")
+    private String userName;
+    @Value("${initial.user.password}")
+    private String userPassword;
+
     public DataInitializer(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -22,8 +33,8 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        createUserIfNotExists("admin@example.com", "admin123", Role.ADMIN);
-        createUserIfNotExists("user@example.com", "user123", Role.USER);
+        createUserIfNotExists(adminName, adminPassword, Role.ADMIN);
+        createUserIfNotExists(userName, userPassword, Role.USER);
     }
 
     private void createUserIfNotExists(String email, String password, Role role) {

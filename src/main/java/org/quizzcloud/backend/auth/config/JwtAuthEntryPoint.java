@@ -3,13 +3,13 @@ package org.quizzcloud.backend.auth.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.quizzcloud.backend.auth.exceptions.CustomJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import org.quizzcloud.backend.shared.exceptions.CustomJwtException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 
@@ -27,7 +27,16 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException {
 
-        CustomJwtException jwtException = getCustomJwtException(authException);
+        Throwable cause = authException.getCause();
+        CustomJwtException jwtException;
+
+        if (cause instanceof ExpiredJwtException) {
+            jwtException = new CustomJwtException("Token has expired. Please log in again.", HttpStatus.UNAUTHORIZED);
+        } else if (cause instanceof MalformedJwtException) {
+            jwtException = new CustomJwtException("Token is malformed. Please provide a valid token.", HttpStatus.UNAUTHORIZED);
+        } else {
+            jwtException = new CustomJwtException("Invalid or expired token.", HttpStatus.UNAUTHORIZED);
+        }
 
         LOGGER.warn("Unauthorized request: {}", jwtException.getMessage());
 
@@ -40,20 +49,6 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
                         jwtException.getMessage(),
                         request.getRequestURI())
         );
-    }
-
-    private static CustomJwtException getCustomJwtException(AuthenticationException authException) {
-        Throwable cause = authException.getCause();
-        CustomJwtException jwtException;
-
-        if (cause instanceof ExpiredJwtException) {
-            jwtException = new CustomJwtException("Token has expired. Please log in again.", HttpStatus.UNAUTHORIZED);
-        } else if (cause instanceof MalformedJwtException) {
-            jwtException = new CustomJwtException("Token is malformed. Please provide a valid token.", HttpStatus.UNAUTHORIZED);
-        } else {
-            jwtException = new CustomJwtException("Invalid or expired token.", HttpStatus.UNAUTHORIZED);
-        }
-        return jwtException;
     }
 }
 

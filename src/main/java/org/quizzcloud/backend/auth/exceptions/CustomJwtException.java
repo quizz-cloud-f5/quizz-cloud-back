@@ -1,4 +1,4 @@
-package org.quizzcloud.backend.shared.exceptions;
+package org.quizzcloud.backend.auth.exceptions;
 
 
 import io.jsonwebtoken.JwtException;

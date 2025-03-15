@@ -20,14 +20,13 @@ public class JwtUtil {
     private final long expirationTime;
 
     /**
-     * Constructor: Decodifica la clave secreta y la valida.
+     * Constructor: Decode the secret key and set the expiration time.
      */
     public JwtUtil(@Value("${jwt.secret}") String secretKey,
                    @Value("${jwt.expiration}") long expirationMillis) {
         try {
             byte[] decodedKey = Base64.getDecoder().decode(secretKey);
 
-            // 🔹 Verifica que la clave tenga al menos 32 bytes para HS256
             if (decodedKey.length < 32) {
                 throw new IllegalArgumentException("Clave JWT inválida. Debe tener al menos 32 bytes.");
             }
@@ -41,7 +40,7 @@ public class JwtUtil {
     }
 
     /**
-     * Genera un JWT con la información del usuario.
+     * Generates a JWT token with the user's email, ID, and role.
      */
     public String generateToken(String userId, String email, String role) {
         Instant now = Instant.now();
@@ -60,7 +59,7 @@ public class JwtUtil {
     }
 
     /**
-     * Extrae el email desde un token JWT.
+     * Extract the email from a JWT token.
      */
     public String extractEmail(String token) {
         try {
@@ -77,7 +76,7 @@ public class JwtUtil {
     }
 
     /**
-     * Valida un JWT y maneja diferentes tipos de excepciones.
+     * Validate a JWT token.
      */
     public boolean validateToken(String token) {
         try {
