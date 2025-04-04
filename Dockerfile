@@ -16,7 +16,7 @@ WORKDIR /app
 # Copiar el jar generado en la fase de build
 COPY --from=build /app/target/backend-*.jar app.jar
 
-# Exponer puerto (si usas otro, cámbialo)
+# Exponer puerto
 EXPOSE 8080
 
 # Comando de ejecución
