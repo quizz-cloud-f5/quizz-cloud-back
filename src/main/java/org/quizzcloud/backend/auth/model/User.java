@@ -1,4 +1,4 @@
-package org.quizzcloud.backend.user.model;
+package org.quizzcloud.backend.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

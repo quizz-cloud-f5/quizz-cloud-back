@@ -1,7 +1,7 @@
-package org.quizzcloud.backend.user.service;
+package org.quizzcloud.backend.auth.service;
 
 
-import org.quizzcloud.backend.user.repository.UserRepository;
+import org.quizzcloud.backend.auth.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

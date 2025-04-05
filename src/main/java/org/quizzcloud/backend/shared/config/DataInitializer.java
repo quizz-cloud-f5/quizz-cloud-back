@@ -1,10 +1,10 @@
-package org.quizzcloud.backend.user.config;
+package org.quizzcloud.backend.shared.config;
 
 
 
-import org.quizzcloud.backend.user.model.Role;
-import org.quizzcloud.backend.user.model.User;
-import org.quizzcloud.backend.user.repository.UserRepository;
+import org.quizzcloud.backend.auth.model.Role;
+import org.quizzcloud.backend.auth.model.User;
+import org.quizzcloud.backend.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

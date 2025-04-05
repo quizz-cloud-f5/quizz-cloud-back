@@ -4,19 +4,19 @@ package org.quizzcloud.backend.auth.service;
 import org.quizzcloud.backend.auth.config.JwtUtil;
 import org.quizzcloud.backend.auth.dto.LoginResponse;
 import org.quizzcloud.backend.shared.exceptions.ResourceNotFoundException;
-import org.quizzcloud.backend.user.model.User;
-import org.quizzcloud.backend.user.repository.UserRepository;
+import org.quizzcloud.backend.auth.model.User;
+import org.quizzcloud.backend.auth.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
+public class LoginService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    public AuthService(UserRepository userRepository, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
+    public LoginService(UserRepository userRepository, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;

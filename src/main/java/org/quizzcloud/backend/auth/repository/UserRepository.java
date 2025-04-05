@@ -1,7 +1,7 @@
-package org.quizzcloud.backend.user.repository;
+package org.quizzcloud.backend.auth.repository;
 
 
-import org.quizzcloud.backend.user.model.User;
+import org.quizzcloud.backend.auth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
