@@ -28,25 +28,25 @@ public class RegisterUserService {
         }
         Role userRole = Role.valueOf(role.toUpperCase());
 
-        String createDefaultPassword = createRandomDefaultPassword();
-        String encodeDefaultPassword = encodeDefaultPassword(createDefaultPassword);
+        String plainPassword = generateRandomPassword();
+        String encodedPassword = encodePassword(plainPassword);
 
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setRole(userRole);
-        newUser.setPassword(encodeDefaultPassword);
+        newUser.setPassword(encodedPassword);
 
         userRepository.save(newUser);
-        log.info("User created: " + email + " / " + createDefaultPassword);
+        log.info("User created: {} / {}", email, plainPassword);
 
         return newUser;
     }
 
-    private String createRandomDefaultPassword() {
+    private String generateRandomPassword() {
         return PasswordGenerator.generateRandomPassword();
     }
 
-    private String encodeDefaultPassword(String createDefaultPassword) {
+    private String encodePassword(String createDefaultPassword) {
         return passwordEncoder.encode(createDefaultPassword);
     }
 }
