@@ -1,7 +1,5 @@
 package org.quizzcloud.backend.shared.exceptions;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -35,6 +33,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex) {
         LOGGER.warn("Resource not found: {}", ex.getMessage());
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleResourceAlreadyExists(ResourceAlreadyExistsException ex) {
+        LOGGER.warn("Resource already exists: {}", ex.getMessage());
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     /**
