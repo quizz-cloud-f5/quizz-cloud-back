@@ -39,6 +39,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @SuppressWarnings("squid:S4502") // CSRF disabled in stateless JWT-based API
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
