@@ -32,6 +32,9 @@ jobs:
       - name: Build with Maven and generate coverage
         run: mvn clean verify
 
+      - name: Copy dependencies to target/dependency
+        run: mvn dependency:copy-dependencies -DincludeScope=compile -DoutputDirectory=target/dependency
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v5
         with:
@@ -40,5 +43,7 @@ jobs:
             -Dsonar.organization=quizz-cloud-f5
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
             -Dsonar.java.binaries=target/classes
+            -Dsonar.java.libraries=target/dependency
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
